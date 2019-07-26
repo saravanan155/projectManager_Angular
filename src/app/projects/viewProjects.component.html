@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Project Manager</title>
+    <style>
+        .btn{
+            height: 35px;
+            padding: 5px;
+        }
+        .row{
+            margin: 15px 15px;
+            padding: 7px;
+        }
+        label{
+            text-align: left;
+        }
+        .searchbar{
+            width:inherit
+        }
+        #btnCol{
+            height:35px;
+            width: 75px;
+            margin: 5px;
+            padding: 5px;
+        }
+        .list-group{
+            margin:0px;
+            padding: 1px;
+            border: none;
+            background: #dddddd;
+                    }
+        .list-group-item{
+            padding: 1px;
+            border: none;
+            background: #dddddd;
+        }
+        .dispPrjCol.col-1{
+            background: #dddddd;
+        }
+        .dispPrjCol.col-2{
+            display: flex;
+            flex-direction: column;
+            justify-content:center;
+        }
+            
+        .dispPrjRow{
+            margin:0px;
+        }
+                
+    </style>
+  </head>
+  <body>
+
+   
+    <form class="srchSort">
+     <div class="container" *ngIf='projectsFiltered && projectsFiltered.length'>
+       <div class="container">
+           <input class="row searchbar" type="text" placeholder='Search Project Name' [(ngModel)]='searchProject' name="Project Name">
+            <div class="row">
+               <label class="col-1">Sort By:</label>
+                <div class="col-1"></div>
+                <div class="col-1 btn btn-primary" type="button">Start Date</div>
+                <div class="col-1"></div>
+                <div class="col-1 btn btn-primary" type="button">End Date</div>
+                <div class="col-1"></div>
+                <div class="col-1 btn btn-primary" type="button">Priority</div>
+                <div class="col-1"></div>
+                <div class="col-1 btn btn-primary" type="button">Completed</div>
+           </div>
+       </div>
+     </div>  
+    </form>    
+    
+    <form class="dispPrj">
+        <div class="container" *ngIf='projectsFiltered && projectsFiltered.length'>
+            <div class="row" *ngFor='let project of projectsFiltered'>
+                <div class="dispPrjCol col-9">
+                    <ul class="list-group">
+                      <li class="list-group-item">Project: {{project.projectName}}</li>
+                      <div class="dispPrjRow row">
+                      <li class="col-6 list-group-item">No of Tasks : </li>
+                      <li class="col-6 list-group-item">Completed : </li>
+                      </div>
+                      <div class="dispPrjRow row">
+                      <li class="col-6 list-group-item">Start Date :{{project.startDate | date:'MM/dd/yyyy'}}  </li>
+                      <li class="col-6 list-group-item">End Date :{{project.endDate  | date:'MM/dd/yyyy'}} </li>
+                      </div>
+                    </ul>
+                </div>
+                <div class="dispPrjCol col-1">
+                    <ul class="list-group">
+                      <li class="row dispPrjRow list-group-item">Priority: {{project.priority}}</li>
+                    </ul>  
+                </div>
+                <div class="dispPrjCol col-2">
+                    <button id="btnCol" class="btn btn-primary" type="button" (click)="onClick(project)" >Update</button>
+                    <button id="btnCol" class="btn btn-primary" type="button" (click)='deleteProject(project.projectId)'>Suspend</button>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>

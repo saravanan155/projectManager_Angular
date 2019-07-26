@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Project Manager</title>
+    <style>
+        input {
+         height: 30;
+         width: 300px;
+         border: 1px solid #000;
+         margin-top: 5px;
+         float: left;
+        }
+        
+        label {
+            text-align:match-parent;
+        }
+        .mydiv {
+            margin: 1px 1px;
+            padding: 1px;
+            border:1px;
+        }
+        .col-1{
+            margin: 1px 1px;
+            padding: 5px;
+        }
+        .mylabel{
+            width: 200px;
+        }
+        .mycheckbox{
+            width: 30px;
+        }
+        .mydate{
+            margin: 5px 10px;
+            width: 150px;
+        }
+        .rightaligndiv{
+            align-content: center;
+        }
+         .btn-space{
+           margin-right: 5px
+        }
+        .btn-sm{
+            width: 150px;
+        }
+    </style>
+  </head>
+  <body>
+
+    <form (ngSubmit)="onSubmit()">
+           <div class=container>
+            
+             <div class="row mydiv form-group">
+                 <div class="col-1">
+                      <label for="prj">Project :</label>
+                 </div>
+                <div class="col">
+                      <input  class="col" type="text" placeholder="Select Project" [disabled]="true" required
+                      value="{{projectName}}" autocomplete="off" [disabled]="isParent">
+                      <div >
+                          <button type="button" (click)="openSubModel(content)" class="btn btn-primary btn-space"> Search </button>
+                     </div>
+                 </div>
+            </div>
+            <div class="row mydiv form-group">
+                 <div class="col-1">
+                      <label for="prj">Task :</label>
+                 </div>
+                <div class="col">
+                      <input class="col" type="text" id="taskName" name="taskName" [(ngModel)]="taskName">
+                 </div>
+            </div>
+            
+              <div class="form-group form-inline">
+                <label>
+                  <input type="checkbox" class="form-check-input"
+                        id="isParent" [disabled]="isEdit" [checked]="isParent" (change)="parentTaskEvent($event)">
+                    Parent Task
+                </label>
+              </div>
+            
+            <div class="row mydiv  form-group">
+               <div class="col-1">
+                <label for="pri">Priority :</label>
+                </div>
+                <div class="col">
+                  <input type="range" min="0" max="30"name="priority" [(ngModel)]="priority" [disabled]="isParent">
+                  <div>{{priority}}</div>
+                </div>
+            </div>
+            
+            <div class="row mydiv  form-group">
+                <div class="col-1">
+                  <label for="mgr">Parent task:</label>
+                </div>
+                <div class="col">
+                    <input  class="col" type="text" placeholder="Select Parent" [disabled]="true" required
+                    value="{{parentName}}" autocomplete="off" [disabled]="isParent">
+                    <div >
+                        <button type="button" (click)="openSubModelParent(contentParent)" class="btn btn-primary btn-space"> Search </button>
+                   </div>
+                </div>
+            </div>
+            
+            <div class="row mydiv  form-group">
+                <div class="col-1"></div>
+                <div class="col">
+                    <div class="row">
+                        <label for="stdt">Start Date :</label>
+                            <input class="mydate" min="{{ todayDate }}" max="{{endDate}}" type="date" id="stdt" name="startDate" [(ngModel)]="startDate" [disabled]="isParent">  
+                        <label for="eddt">End Date :</label>
+                            <input class="mydate" min="{{ startDate }}" type="date" id="eddt" name="endDate" [(ngModel)]="endDate" [disabled]="isParent">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mydiv  form-group">
+                <div class="col-1">
+                  <label for="mgr">User:</label>
+                </div>
+                <div class="col">
+                    <input  class="col" type="text" placeholder="Select User" [disabled]="true" required
+                    value="{{userName}}" autocomplete="off" [disabled]="isParent">
+              <div >
+                  <button type="button" (click)="openSubModelUser(contentUser)" class="btn btn-primary btn-space"> Search </button>
+              </div>
+                </div>
+            </div>
+
+            <div class="row mydiv form-group">
+              <div class="col-1"></div>
+              <div class="col">
+               <div class="row">
+                   <button class="col-1 btn btn-primary" type="submit">{{submitbtn}}</button>
+                   <button class="col-1 btn btn-primary" type="reset" (click)="onReset()">Reset</button>
+               </div>
+               </div>
+           </div>
+
+           </div>
+    </form>
+    
+    <ng-template #content let-modal>
+        <div class="double">
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title" style="text-align: center"> Select Project Name </h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="form-group form-inline">
+                <label class="modelLabel btn-space"> Project </label>
+                <select class="form-control selectInput btn-space" id="selectedProjectId" name="selectedProjectId" [(ngModel)]="selectedProjectId">
+                  <option *ngFor="let project of projects" value="{{project.projectId}}">
+                    {{ project.projectName}}
+                  </option>
+                </select>
+              </div>
+              <button id="selectProject" class="btn btn-primary btn-space" (click)="selectProject()">Select</button>
+              <button id="cancelButton" class="btn btn-primary btn-space" (click)="modal.dismiss()">Cancel</button>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #contentParent let-modal>
+          <div class="double">
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title" style="text-align: center"> Select Parent Task Name </h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group form-inline">
+                  <label class="modelLabel btn-space"> Parent </label>
+                  <select class="form-control selectInput btn-space" id="selectedParentId" name="selectedParentId" [(ngModel)]="selectedParentId">
+                    <option *ngFor="let parent of parents" value="{{parent.parentId}}">
+                      {{ parent.parentName}}
+                    </option>
+                  </select>
+                </div>
+                <button id="selectParent" class="btn btn-primary btn-space" (click)="selectParent()">Select</button>
+                <button id="cancelButton" class="btn btn-primary btn-space" (click)="modal.dismiss()">Cancel</button>
+            </div>
+          </div>
+        </ng-template>
+
+      <ng-template #contentUser let-modal>
+          <div class="double">
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title" style="text-align: center"> Select Manager for Project </h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group form-inline">
+                  <label class="modelLabel btn-space"> Developer Name </label>
+                  <select class="form-control selectInput" id="selectedUserId" name="selectedUserId" [(ngModel)]="selectedUserId">
+                    <option *ngFor="let user of users" value="{{user.userId}}">
+                      {{ user.firstName }} , {{ user.lastName }}
+                    </option>
+                  </select>
+                </div>
+                <button id="selectUser" class="btn btn-primary btn-space" (click)="selectUser()">Select</button>
+                <button id="cancelButton" class="btn btn-primary btn-space" (click)="modal.dismiss()">Cancel</button>
+            </div>
+          </div>
+        </ng-template>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>

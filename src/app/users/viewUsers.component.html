@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Project Manager</title>
+    <style>
+        .btn{
+            height: 35px;
+            padding: 5px;
+        }
+        .row{
+            margin: 15px 15px;
+            padding: 7px;
+        }
+        label{
+            text-align: left;
+        }
+        .searchbar{
+            width:inherit
+        }
+        #btnCol{
+            height:35px;
+            width: 75px;
+            margin: 5px;
+            padding: 5px;
+        }
+        .list-group{
+            margin:0px;
+            padding: 1px;
+            border: none;
+            background: #dddddd;
+                    }
+        .list-group-item{
+            padding: 1px;
+            border: none;
+            background: #dddddd;
+        }
+        .dispPrjCol.col-10{
+            padding: 0px;
+            background: #dddddd;
+        }
+        .dispPrjCol.col-2{
+            display: flex;
+            flex-direction: column;
+            justify-content:center;
+        }
+        .dispPrjRow{
+            margin:0px;
+        }
+        .horizBtn{
+            margin: 10px 0px;
+            padding: 2px;
+        }       
+        .align-items-center{
+            margin: 10px 0px;
+            padding: 10px;
+        }
+        .btn-space{
+           margin-right: 5px
+        }
+        .btn-sm{
+            width: 150px;
+        }
+    </style>
+  </head>
+  <body>
+
+   
+    <form class="srchSort">
+       <div class="container">
+            <div class="row">
+               <input class="col-5 searchbar" type="text" [(ngModel)]='searchFirstName' name="first name">
+               <label class="col-1">Sort By:</label>
+               <div class="col-6">
+                   <button class="col-4 btn btn-space btn-secondary btn-sm" type="button" (click)='sortByFirstName()'>First Name</button>
+                   <button class="col-4 btn btn-space btn-secondary btn-sm" type="button" (click)='sortByLastName()'>Last Name</button>
+                   <button class="col-4 btn btn-space btn-secondary btn-sm" type="button" (click)='sortByEmployeeId()'>ID</button>
+               </div>
+            </div>
+       </div>
+    </form>    
+    
+    <form class="dispPrj">
+        <div class="container"  *ngIf='usersFiltered && usersFiltered.length'>
+            <div class="row" *ngFor='let user of usersFiltered'>
+                <div class="dispPrjCol col-10">
+                    <ul class="list-group">
+                      <li class="list-group-item">First Name  : {{user.firstName}}</li>
+                      <li class="list-group-item">Second Name : {{user.lastName}}</li>
+                      <li class="list-group-item">Employee ID : {{user.employeeId}}</li>
+                    </ul>
+                </div>
+                
+                <div class="dispPrjCol col-2">
+                    <div id="btnCol" class="btn btn-primary" type="button" (click)="onClick(user)">Edit</div>
+                    <div id="btnCol" class="btn btn-primary" type="button" (click)='deleteUser(user.userId)'>Delete</div>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>

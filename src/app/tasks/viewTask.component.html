@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Project Manager</title>
+    <style>
+        .btn{
+            height: 35px;
+            padding: 5px;
+        }
+        .row{
+            margin: 15px 15px;
+            padding: 7px;
+        }
+        label{
+            text-align: left;
+        }
+        .searchbar{
+            width:inherit
+        }
+        #btnCol{
+            height:35px;
+            width: 75px;
+            margin: 5px;
+            padding: 5px;
+        }
+        .list-group{
+            margin:0px;
+            padding: 1px;
+            border: none;
+            background: #dddddd;
+                    }
+        .list-group-item{
+            padding: 1px;
+            border: none;
+            background: #dddddd;
+        }
+        .dispPrjCol.col-3{
+            padding: 1px;
+            background: #dddddd;
+        }
+        .dispPrjCol.col-2{
+            padding: 1px;
+            background: #dddddd;
+        }
+        .dispPrjCol.col-1{
+            padding: 1px;
+            background: #dddddd;
+        }       
+            
+        .dispPrjRow{
+            margin:0px;
+        }
+        .horizBtn{
+            margin: 10px 0px;
+            padding: 2px;
+        }       
+        .align-items-center{
+            margin: 10px 0px;
+            padding: 10px;
+        }
+        .btn-space{
+           margin-right: 10px
+        }
+    </style>
+  </head>
+  <body>
+
+   
+    <form class="srchSort">
+       <div class="container">
+            <div class="row">
+               <label class="col-1">Project: </label>
+
+               <input  class="col" type="text" placeholder="Select Project" [disabled]="true" required
+               value="{{projectName}}" autocomplete="off">
+               <div >
+                    <button type="button" (click)="openSubModel(content)" class="btn btn-primary btn-space"> Search </button>
+               </div>
+
+               <label class="col-1">Sort By:</label>
+               <div class="col-6">
+                   <div class="col-2 btn btn-space btn-primary" type="button">Start Date</div>
+                   <div class="col-2 btn btn-space btn-primary" type="button">End Date</div>
+                   <div class="col-2 btn btn-space btn-primary" type="button">Priority</div>
+                   <div class="col-2 btn btn-space btn-primary" type="button">Completed</div>
+               </div>
+            </div>
+       </div>
+    </form>    
+    
+    <form class="dispPrj">
+        <div class="container" *ngIf='tasksFiltered && tasksFiltered.length'>
+            <div class="row" *ngFor = 'let task of tasksFiltered'>
+                <div class="dispPrjCol col-3">
+                    <ul class="list-group">
+                      <li class="list-group-item">Task : {{task.taskName}}</li>
+                      <li class="list-group-item"></li>
+                    </ul>
+                </div>
+                <div class="dispPrjCol col-3">
+                    <ul class="list-group">
+                      <li class="list-group-item">Parent  : {{task.parent.parentName}}</li>
+                      <li class="list-group-item"></li>
+                    </ul>
+                </div>
+                <div class="dispPrjCol col-1">
+                    <ul class="list-group">
+                      <li class="row dispPrjRow list-group-item">Priority: {{task.priority}}</li>
+                    </ul>  
+                </div>
+                <div class="dispPrjCol col-2">
+                    <ul class="list-group">
+                      <li class="row dispPrjRow list-group-item">Start: {{task.startDate | date:'MM/dd/yyyy'}}</li>
+                    </ul>  
+                </div>
+                <div class="dispPrjCol col-2">
+                    <ul class="list-group">
+                      <li class="row dispPrjRow list-group-item">End: {{task.endDate | date:'MM/dd/yyyy'}}</li>
+                    </ul>  
+                </div>
+                <div class="col-1">
+                    <div id="btnCol" class="btn btn-primary" type="button">Edit</div>
+                    <div id="btnCol" class="btn btn-primary" type="button">End Task</div>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+    
+    <ng-template #content let-modal>
+            <div class="double">
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title" style="text-align: center"> Select Project Name </h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <div class="form-group form-inline">
+                    <label class="modelLabel btn-space"> Project </label>
+                    <select class="form-control selectInput btn-space" id="selectedProjectId" name="selectedProjectId" [(ngModel)]="selectedProjectId">
+                      <option *ngFor="let project of projects" value="{{project.projectId}}">
+                        {{ project.projectName}}
+                      </option>
+                    </select>
+                  </div>
+                  <button id="selectProject" class="btn btn-primary btn-space" (click)="selectProject()">Select</button>
+                  <button id="cancelButton" class="btn btn-primary btn-space" (click)="modal.dismiss()">Cancel</button>
+              </div>
+            </div>
+          </ng-template>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>

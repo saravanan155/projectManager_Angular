@@ -1,0 +1,38 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Project Manager</title>
+    <style>
+        .col{
+            margin: 10px 10px;
+            color: white;
+        }
+    </style>
+  </head>
+  <body>
+    <br>
+    <br>    
+    <h1 class=text-center>Project Manager</h1>
+    <br>
+    <div class="container">
+       <div class="row align-items-center">
+           <div class="col btn btn-primary" type="button"><div [routerLink]="['/addproject']">Add Project</div></div>
+           <div class="col btn btn-primary" type="button"><div [routerLink]="['/addtask']">Add Task</div></div>
+           <div class="col btn btn-primary" type="button"><div [routerLink]="['/adduser']">Add User</div></div>
+           <div class="col btn btn-primary" type="button"><div [routerLink]="['/viewtask']">View Task</div></div>                                 
+        </div>        
+    </div>
+
+<br>
+
+<div >
+    <router-outlet></router-outlet>
+</div>
