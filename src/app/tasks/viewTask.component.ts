@@ -5,6 +5,7 @@ import { IUser } from '../users/user';
 import { TaskService } from './task.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectService } from '../projects/project.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'view-task',
@@ -17,11 +18,11 @@ export class ViewTaskComponent {
   selectedProject: number;
   selectedProjectId: number;
   projectName: string;
-
+  sorted : boolean = false;
   projects: IProject [] = [];
   tasks: ITask [] = [];
 
-  constructor (private taskService : TaskService, private projectService : ProjectService, private modalService: NgbModal) {
+  constructor (private taskService : TaskService, private projectService : ProjectService, private modalService: NgbModal, private router: Router) {
     
   }
 
@@ -69,4 +70,51 @@ export class ViewTaskComponent {
     this.modalService.dismissAll();
   }
   
+  editTask(taskId) {
+    //console.log("task : " + taskId);
+    this.router.navigate(['/addtask',taskId])
+  }
+
+  endTask(task){
+        task.taskStatus=false;
+        this.taskService.addTask(task).subscribe(
+          save => {
+            this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+              this.router.navigate(['/viewtask'])); 
+          });
+  }
+
+  sortByCompleted(){
+    if(this.sorted)
+      this.tasksFiltered.sort((a,b) => {return <any> new Boolean(a.taskStatus) - <any> new Boolean(b.taskStatus)} );
+    else
+      this.tasksFiltered.sort((a,b) => {return <any> new Boolean(b.taskStatus) - <any> new Boolean(a.taskStatus)} );
+    this.sorted = !this.sorted;
+  }
+
+sortByPriority(){
+  if(this.sorted)
+    this.tasksFiltered.sort((a,b) => a.priority - b.priority);
+  else
+    this.tasksFiltered.sort((a,b) => b.priority - a.priority);
+  this.sorted = !this.sorted;
+}
+
+sortByStartDate(){
+  if(this.sorted)
+    this.tasksFiltered.sort((a,b) => { return <any> new Date(a.startDate) - <any> new Date(b.startDate)} );
+  else
+  this.tasksFiltered.sort((a,b) => { return <any> new Date(b.startDate) - <any> new Date(a.startDate)} );
+  
+  this.sorted = !this.sorted;
+}
+
+sortByEndDate(){
+  if(this.sorted)
+    this.tasksFiltered.sort((a,b) => { return <any> new Date(a.endDate) - <any> new Date(b.endDate)} );
+  else
+  this.tasksFiltered.sort((a,b) => { return <any> new Date(b.endDate) - <any> new Date(a.endDate)} );
+  
+  this.sorted = !this.sorted;
+}
 }

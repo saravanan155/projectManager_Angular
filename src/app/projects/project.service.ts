@@ -16,7 +16,7 @@ const httpOptions = {
 )
 
 export class ProjectService {
-private serviceURL = 'http://localhost:8080/api/v1';
+private serviceURL = 'http://localhost:8081/api/v1';
 
 constructor (private http: HttpClient){}
 

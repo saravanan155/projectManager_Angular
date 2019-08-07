@@ -27,7 +27,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     RouterModule.forRoot([
       {path: 'addproject', component: addProjectComponent},
-      {path: 'addtask', component: addTaskComponent},
+      {path: 'addtask/:taskId', component: addTaskComponent},
       {path: 'adduser', component: addUserComponent},
       {path: 'viewtask', component: ViewTaskComponent},
       {path: '', redirectTo:'viewtask',pathMatch: 'full'},

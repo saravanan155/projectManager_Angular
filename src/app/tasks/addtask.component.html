@@ -62,9 +62,9 @@
                  </div>
                 <div class="col">
                       <input  class="col" type="text" placeholder="Select Project" [disabled]="true" required
-                      value="{{projectName}}" autocomplete="off" [disabled]="isParent">
+                      value="{{projectName}}" autocomplete="off" >
                       <div >
-                          <button type="button" (click)="openSubModel(content)" class="btn btn-primary btn-space"> Search </button>
+                          <button type="button" (click)="openSubModel(content)" class="btn btn-primary btn-space" [disabled]="isParent"> Search </button>
                      </div>
                  </div>
             </div>
@@ -101,9 +101,9 @@
                 </div>
                 <div class="col">
                     <input  class="col" type="text" placeholder="Select Parent" [disabled]="true" required
-                    value="{{parentName}}" autocomplete="off" [disabled]="isParent">
+                    value="{{parentName}}" autocomplete="off" >
                     <div >
-                        <button type="button" (click)="openSubModelParent(contentParent)" class="btn btn-primary btn-space"> Search </button>
+                        <button type="button" (click)="openSubModelParent(contentParent)" class="btn btn-primary btn-space" [disabled]="isParent"> Search </button>
                    </div>
                 </div>
             </div>
@@ -126,9 +126,9 @@
                 </div>
                 <div class="col">
                     <input  class="col" type="text" placeholder="Select User" [disabled]="true" required
-                    value="{{userName}}" autocomplete="off" [disabled]="isParent">
+                    value="{{userName}}" autocomplete="off" >
               <div >
-                  <button type="button" (click)="openSubModelUser(contentUser)" class="btn btn-primary btn-space"> Search </button>
+                  <button type="button" (click)="openSubModelUser(contentUser)" class="btn btn-primary btn-space" [disabled]="isParent"> Search </button>
               </div>
                 </div>
             </div>

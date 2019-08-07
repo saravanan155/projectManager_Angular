@@ -6,5 +6,7 @@ export interface IProject {
     startDate : string,
     endDate : string,
     priority:number,
+    projectStatus : boolean,
     user: IUser
+    taskCount: number;
 }

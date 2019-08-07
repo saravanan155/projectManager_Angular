@@ -29,6 +29,7 @@ export class addProjectComponent {
   startDate: string;
   endDate: string;
   priority: number=0;
+  projectStatus: boolean = true;
   projectId: number;
   submitbtn: string = "Add";
   project : IProject;
@@ -41,6 +42,7 @@ export class addProjectComponent {
     this.submitbtn= "Add";    
     this.projectName="";
     this.priority=0;
+    this.projectStatus=true;
     this.projectId=0;
     this.manager=null;
     this.managerName = "";
@@ -61,6 +63,7 @@ export class addProjectComponent {
     
     this.projectName =projectAdded.projectName;
     this.priority =projectAdded.priority;
+    this.projectStatus=projectAdded.projectStatus;
     this.projectId=projectAdded.projectId;
     this.manager=projectAdded.user;
     this.managerName = this.manager.employeeId + ' - ' + this.manager.firstName + ' , ' + this.manager.lastName;
@@ -80,7 +83,9 @@ export class addProjectComponent {
         "endDate": this.endDate,
         "priority": this.priority,
         "projectId": this.projectId,
-        "user":this.manager
+        "projectStatus":this.projectStatus,
+        "user":this.manager,
+        "taskCount":0
         }
      
         console.log("data before insert project:" + data);

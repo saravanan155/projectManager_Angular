@@ -15,6 +15,7 @@ export class viewProjectsComponent {
   _searchProject = '';
   projectsFiltered: IProject[];
   errorMessage = '';
+  sorted: boolean = false;
 
   @Output() notify: EventEmitter<IProject> = new EventEmitter<IProject>();
   
@@ -68,4 +69,39 @@ export class viewProjectsComponent {
       (err) => console.log(err)
     );
   }
+
+  sortByCompleted(){
+    if(this.sorted)
+      this.projectsFiltered.sort((a,b) => {return <any> new Boolean(a.projectStatus) - <any> new Boolean(b.projectStatus)} );
+    else
+      this.projectsFiltered.sort((a,b) => {return <any> new Boolean(b.projectStatus) - <any> new Boolean(a.projectStatus)} );
+    this.sorted = !this.sorted;
+  }
+
+sortByPriority(){
+  if(this.sorted)
+    this.projectsFiltered.sort((a,b) => a.priority - b.priority);
+  else
+    this.projectsFiltered.sort((a,b) => b.priority - a.priority);
+  this.sorted = !this.sorted;
+}
+
+sortByStartDate(){
+  if(this.sorted)
+    this.projectsFiltered.sort((a,b) => { return <any> new Date(a.startDate) - <any> new Date(b.startDate)} );
+  else
+  this.projectsFiltered.sort((a,b) => { return <any> new Date(b.startDate) - <any> new Date(a.startDate)} );
+  
+  this.sorted = !this.sorted;
+}
+
+sortByEndDate(){
+  if(this.sorted)
+    this.projectsFiltered.sort((a,b) => { return <any> new Date(a.endDate) - <any> new Date(b.endDate)} );
+  else
+  this.projectsFiltered.sort((a,b) => { return <any> new Date(b.endDate) - <any> new Date(a.endDate)} );
+  
+  this.sorted = !this.sorted;
+}
+
 }

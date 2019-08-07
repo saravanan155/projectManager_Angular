@@ -3,6 +3,7 @@ import { IProject } from '../projects/project';
 import { IParent } from './parent';
 
 export interface ITask{
+    taskId: number;
     taskName : string;
     priority: number;
     startDate: string;

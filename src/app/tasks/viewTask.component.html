@@ -66,7 +66,11 @@
             padding: 10px;
         }
         .btn-space{
-           margin-right: 10px
+           margin-right: 10px;
+        }
+        .btn{
+           width: 100px;
+           margin: 2px;
         }
     </style>
   </head>
@@ -86,10 +90,10 @@
 
                <label class="col-1">Sort By:</label>
                <div class="col-6">
-                   <div class="col-2 btn btn-space btn-primary" type="button">Start Date</div>
-                   <div class="col-2 btn btn-space btn-primary" type="button">End Date</div>
-                   <div class="col-2 btn btn-space btn-primary" type="button">Priority</div>
-                   <div class="col-2 btn btn-space btn-primary" type="button">Completed</div>
+                   <div class="col-2 btn btn-space btn-primary" type="button" (click)='sortByStartDate()'>Start Date</div>
+                   <div class="col-2 btn btn-space btn-primary" type="button" (click)='sortByEndDate()'>End Date</div>
+                   <div class="col-2 btn btn-space btn-primary" type="button" (click)='sortByPriority()'>Priority</div>
+                   <div class="col-2 btn btn-space btn-primary" type="button" (click)='sortByCompleted()'>Completed</div>
                </div>
             </div>
        </div>
@@ -126,8 +130,8 @@
                     </ul>  
                 </div>
                 <div class="col-1">
-                    <div id="btnCol" class="btn btn-primary" type="button">Edit</div>
-                    <div id="btnCol" class="btn btn-primary" type="button">End Task</div>
+                    <button class="btn btn-primary" (click)='editTask(task.taskId)' [disabled]=!task.taskStatus> Edit </button>
+                    <button class="btn btn-primary" (click)='endTask(task)' [disabled]=!task.taskStatus> End Task </button>
                 </div>
             </div>
             
