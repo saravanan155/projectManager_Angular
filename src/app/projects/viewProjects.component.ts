@@ -5,6 +5,7 @@ import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { isBuffer } from 'util';
 import { EventEmitter } from '@angular/core';
 import { UserService } from '../users/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'view-projects',
@@ -31,7 +32,7 @@ export class viewProjectsComponent {
     this.projectsFiltered=this.searchProject ? this.performFilter(this.searchProject) : this.projects;
   }
 
-  constructor (private projectService : ProjectService, private userService: UserService) {
+  constructor (private projectService : ProjectService, private userService: UserService, private router: Router) {
     this.searchProject ='';
   }
   
@@ -61,13 +62,22 @@ export class viewProjectsComponent {
         this.projectsFiltered = this.projectsFiltered.filter(project => project.projectId !== projectId);        
     }
 
-  deleteProject (projectId: number): void{
-    this.projectService.delProject(projectId).subscribe(
-      ()=>{console.log('delete successfully'),
-           this.deleteProjectFiltered(projectId)
-           },
-      (err) => console.log(err)
-    );
+  //deleteProject1 (projectId: number): void{
+  //    this.projectService.delProject(projectId).subscribe(
+  //()=>{console.log('delete successfully'),
+  //this.deleteProjectFiltered(projectId)
+  //},
+  //(err) => console.log(err)
+  //);
+  //}
+
+  deleteProject (project: IProject): void{
+    project.projectStatus=false;
+    this.projectService.addProject(project).subscribe(
+    save => {
+      this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+        this.router.navigate(['/addproject'])); 
+    });
   }
 
   sortByCompleted(){
